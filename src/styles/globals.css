@@ -1,15 +1,48 @@
 @import "tailwindcss";
 
+@plugin "tailwindcss-animate";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg-primary: #050505;
+  --color-bg-secondary: #0f0f10;
+  --color-bg-tertiary: #19191a;
+
+  --color-text-body: #cdcbcc;
+  --color-text-placeholder: #827d7f;
+  --color-text-headline: #b2b2b2;
+
+  --color-border-primary: #19191a;
+  --color-border-secondary: #323234;
+  --color-border-tertiary: #97979b;
+
+  --color-accent-purple: #4b2dbb;
+  --color-accent-green: #87bb2d;
+  --color-accent-pink: #b5446b;
+
+ 
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-bg-primary);
+  --color-background-secondary: var(--color-bg-secondary);
+  --color-background-tertiary: var(--color-bg-tertiary);
+
+  --color-foreground: var(--color-text-body);
+  --color-content-body: var(--color-text-body);
+  --color-content-placeholder: var(--color-text-placeholder);
+  --color-content-headline: var(--color-text-headline);
+
+  --color-border-primary: var(--color-border-primary);
+  --color-border-secondary: var(--color-border-secondary);
+  --color-border-tertiary: var(--color-border-tertiary);
+
+  --color-accent-purple: var(--color-accent-purple);
+  --color-accent-green: var(--color-accent-green);
+  --color-accent-pink: var(--color-accent-pink);
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +56,25 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+html.app-background {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  background-image: radial-gradient(
+      circle at 48% 54%,
+      #010a2d,
+      transparent
+    ),
+    url("/assets/bg-stars.svg");
+  background-repeat: no-repeat, repeat;
+  background-position: 48% 54%, center;
+  background-size: auto, auto;
+  background-attachment: fixed;
+}
+
+html.app-background body {
+  background: transparent;
 }
 
 .satisfy-font {
