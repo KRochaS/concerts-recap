@@ -6,12 +6,14 @@ import "@/styles/globals.css";
 const workSansDisplay = Work_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
+  display: "swap",
 });
 
 const satisfyDisplay = Satisfy({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-satisfy",
+  display: "swap",
 });
 
 export default function App({ Component, pageProps }: AppProps) {

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "../../../shared/components/button/Button";
 import Card from "../../../shared/components/card/Card";
 
@@ -18,26 +19,26 @@ export function Hero() {
               Fill out your concert memories page with the best moments
             </p>
 
-            <Link href={"/new-concert"}>
+            <Link href="/new-concert">
               <Button className="text-md"> REGISTER CONCERTS </Button>
             </Link>
           </div>
 
           <div className="flex flex-col gap-6 md:items-end">
             <Card
-              src="./images/image-1.png"
+              src="/images/image-1.png"
               description="recap your concerts moments and share (if you like) with the world"
             />
 
             <div className="md:self-center">
               <Card
-                src="./images/image-2.png"
+                src="/images/image-2.png"
                 description="See how many people have checked out your memories"
               />
             </div>
 
             <Card
-              src="./images/image-3.png"
+              src="/images/image-3.png"
               description="Record the distance you traveled, the songs that made you feel alive, and the song you missed"
             />
           </div>
