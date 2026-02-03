@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   FaBatteryEmpty,
   FaBatteryFull,
   FaBatteryHalf,
   FaBatteryQuarter,
   FaBatteryThreeQuarters,
-} from "react-icons/fa6";
+} from 'react-icons/fa6';
 
-import { IconBaseProps } from "react-icons";
-import { BatteryIcons, BatteryProps } from "../../ui-model/shared.model";
+import { BatteryIcons, BatteryProps } from '../../ui-model/shared.model';
 
 export function Battery({ id, label, ...props }: BatteryProps) {
   const [level, setLevel] = useState(0);
@@ -44,7 +43,7 @@ export function Battery({ id, label, ...props }: BatteryProps) {
         <BatteryIcon
           {...props}
           style={{
-            fill: "currentColor",
+            fill: 'currentColor',
           }}
         />
       </button>

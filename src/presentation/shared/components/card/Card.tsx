@@ -1,8 +1,6 @@
-import Image from "next/image";
-import { FaEye } from "react-icons/fa6";
-import { cn } from "../../lib/utils";
-import { CardProps } from "../../ui-model/shared.model";
-
+import Image from 'next/image';
+import { cn } from '../../lib/utils';
+import { CardProps } from '../../ui-model/shared.model';
 
 export default function Card({
   title,
@@ -14,15 +12,16 @@ export default function Card({
   seeRecap,
 }: CardProps) {
   return (
-    <div className={cn(
-      "w-full max-w-sm bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex gap-4",
-      seeRecap && "hover:border-border-secondary cursor-pointer"
-    )}
-  >
+    <div
+      className={cn(
+        'w-full max-w-sm bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex gap-4',
+        seeRecap && 'hover:border-border-secondary cursor-pointer'
+      )}
+    >
       <div className="size-24 rounded-md overflow-hidden shrink-0 relative">
         <Image
           src={src}
-          alt={description || title || "Concert image"}
+          alt={description || title || 'Concert image'}
           fill
           sizes="96px"
           className="object-cover"

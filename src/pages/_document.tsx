@@ -1,5 +1,4 @@
-import { Html, Head, Main, NextScript } from "next/document";
-import { JSX } from "react";
+import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
@@ -11,5 +10,4 @@ export default function Document() {
       </body>
     </Html>
   );
-  
 }

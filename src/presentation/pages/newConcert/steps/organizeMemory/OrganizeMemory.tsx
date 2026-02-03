@@ -1,20 +1,19 @@
-import { Badge } from "@/presentation/shared/components/badge/Badge";
-import { Battery } from "@/presentation/shared/components/battery/Battery";
-import { Button } from "@/presentation/shared/components/button/Button";
-import { DatePicker } from "@/presentation/shared/components/datepicker/Datepicker";
-import { Input } from "@/presentation/shared/components/input/Input";
-import { OverallRating } from "@/presentation/shared/components/overallRating/OverallRating";
-import { Select } from "@/presentation/shared/components/select/Select";
+import { Badge } from '@/presentation/shared/components/badge/Badge';
+import { Battery } from '@/presentation/shared/components/battery/Battery';
+import { Button } from '@/presentation/shared/components/button/Button';
+import { DatePicker } from '@/presentation/shared/components/datepicker/Datepicker';
+import { Input } from '@/presentation/shared/components/input/Input';
+import { OverallRating } from '@/presentation/shared/components/overallRating/OverallRating';
+import { Select } from '@/presentation/shared/components/select/Select';
 
-import Stars from "@/presentation/shared/components/stars/Stars";
-import { Textarea } from "@/presentation/shared/components/textarea/Textarea";
-import TicketUpload from "@/presentation/shared/components/ticketUpload/TicketUpload";
-import { NewConcertStepProps } from "@/presentation/ui-model/newConcert/newConcertFlow";
+import Stars from '@/presentation/shared/components/stars/Stars';
+import { Textarea } from '@/presentation/shared/components/textarea/Textarea';
+import TicketUpload from '@/presentation/shared/components/ticketUpload/TicketUpload';
+import { NewConcertStepProps } from '@/presentation/ui-model/newConcert/newConcertFlow';
 
 import {
   Armchair,
   ArrowLeft,
-  ArrowUp,
   Eye,
   Footprints,
   Frown,
@@ -26,40 +25,39 @@ import {
   Sparkles,
   Users,
   Zap,
-} from "lucide-react";
-import { useState } from "react";
+} from 'lucide-react';
+import { useState } from 'react';
 
 export function OrganizeMemory({ onBack }: NewConcertStepProps) {
   const [date, setDate] = useState<Date>();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const badges = [
-    { id: 1, name: "I cried", icon: Frown, color: "#f87171" },
-    { id: 2, name: "Moshpit", icon: Users, color: "#fb923c" },
-    { id: 3, name: "Circle pit", icon: RotateCw, color: "#facc15" },
-    { id: 4, name: "Wall of death", icon: Footprints, color: "#ef4444" },
-    { id: 5, name: "Great view", icon: Eye, color: "#4ade80" },
-    { id: 6, name: "Fun people", icon: PartyPopper, color: "#60a5fa" },
-    { id: 7, name: "Bought merch", icon: ShoppingBag, color: "#c084fc" },
-    { id: 8, name: "Lost voice", icon: Mic2, color: "#2dd4bf" },
-    { id: 9, name: "Met artist", icon: Handshake, color: "#f472b6" },
-    { id: 10, name: "Seating ticket", icon: Armchair, color: "#818cf8" },
-    { id: 11, name: "Electric crowd", icon: Zap, color: "#f97316" },
-    { id: 12, name: "Chills", icon: Sparkles, color: "#a855f7" },
+    { id: 1, name: 'I cried', icon: Frown, color: '#f87171' },
+    { id: 2, name: 'Moshpit', icon: Users, color: '#fb923c' },
+    { id: 3, name: 'Circle pit', icon: RotateCw, color: '#facc15' },
+    { id: 4, name: 'Wall of death', icon: Footprints, color: '#ef4444' },
+    { id: 5, name: 'Great view', icon: Eye, color: '#4ade80' },
+    { id: 6, name: 'Fun people', icon: PartyPopper, color: '#60a5fa' },
+    { id: 7, name: 'Bought merch', icon: ShoppingBag, color: '#c084fc' },
+    { id: 8, name: 'Lost voice', icon: Mic2, color: '#2dd4bf' },
+    { id: 9, name: 'Met artist', icon: Handshake, color: '#f472b6' },
+    { id: 10, name: 'Seating ticket', icon: Armchair, color: '#818cf8' },
+    { id: 11, name: 'Electric crowd', icon: Zap, color: '#f97316' },
+    { id: 12, name: 'Chills', icon: Sparkles, color: '#a855f7' },
   ];
 
   const options = [
-    { value: "6", label: "6 - Amazing" },
-    { value: "5", label: "5 - Good" },
-    { value: "4", label: "4 - OK" },
-    { value: "3", label: "3 - Could be better" },
-    { value: "2", label: "2 - Bad" },
-    { value: "1", label: "1 - Horror" },
+    { value: '5', label: '5 - Amazing' },
+    { value: '4', label: '4 - Good' },
+    { value: '3', label: '3 - OK' },
+    { value: '2', label: '2 - Bad' },
+    { value: '1', label: '1 - Horror' },
   ];
 
   const handleToggle = (id: number) => {
     setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
@@ -125,37 +123,37 @@ export function OrganizeMemory({ onBack }: NewConcertStepProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <Select
                     label="ENTRANCE"
-                    value="6"
+                    defaultValue="6"
                     options={options}
                     id="entrance"
                   />
                   <Select
                     label="SUPPORT ACT"
-                    value="5"
+                    defaultValue="5"
                     options={options}
                     id="support"
                   />
                   <Select
                     label="MAIN ACT"
-                    value="6"
+                    defaultValue="6"
                     options={options}
                     id="main"
                   />
                   <Select
                     label="CROWD"
-                    value="6"
+                    defaultValue="6"
                     options={options}
                     id="crowd"
                   />
                   <Select
                     label="STAGE SHOW"
-                    value="6"
+                    defaultValue="6"
                     options={options}
                     id="stage"
                   />
                   <Select
                     label="MOOD OF ARTISTS"
-                    value="3"
+                    defaultValue="3"
                     options={options}
                     id="mood"
                   />

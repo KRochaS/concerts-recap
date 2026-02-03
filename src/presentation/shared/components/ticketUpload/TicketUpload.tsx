@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
-import { ImagePlus, X } from "lucide-react"; // Instale lucide-react para os ícones
+import React, { useState, useRef } from 'react';
+import { ImagePlus, X } from 'lucide-react'; // Instale lucide-react para os ícones
+import Image from 'next/image';
 
 const TicketUpload = () => {
   const [preview, setPreview] = useState<string | null>(null);
@@ -17,14 +18,12 @@ const TicketUpload = () => {
   const removeImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setPreview(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   return (
     <div className="w-full space-y-2 flex gap-1 flex-col">
-      <label className="">
-        CONCERT TICKET
-      </label>
+      <label className="">CONCERT TICKET</label>
 
       <div
         onClick={() => fileInputRef.current?.click()}
@@ -34,8 +33,8 @@ const TicketUpload = () => {
           flex flex-col items-center justify-center transition-all duration-300
           ${
             preview
-              ? "border-[#4b2dbb]/50"
-              : "border-white/10 hover:border-white/20 hover:bg-white/5"
+              ? 'border-[#4b2dbb]/50'
+              : 'border-white/10 hover:border-white/20 hover:bg-white/5'
           }
           bg-[#0a0b14] overflow-hidden
         `}
@@ -50,7 +49,7 @@ const TicketUpload = () => {
 
         {preview ? (
           <>
-            <img
+            <Image
               src={preview}
               alt="Ticket Preview"
               className="w-full h-full object-contain p-2"
@@ -78,7 +77,6 @@ const TicketUpload = () => {
           </div>
         )}
 
-       
         <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-[#05060b] rounded-full border-r border-white/10" />
         <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-[#05060b] rounded-full border-l border-white/10" />
       </div>

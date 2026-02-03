@@ -1,20 +1,29 @@
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { Hero } from "./Hero";
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { Hero } from './Hero';
 
+jest.mock('next/link', () => {
+  const NextLink = ({
+    href,
+    children,
+  }: {
+    href: string;
+    children: React.ReactNode;
+  }) => <a href={href}>{children}</a>;
 
-jest.mock("next/link", () => {
-  return ({ href, children }: any) => <a href={href}>{children}</a>;
+  NextLink.displayName = 'NextLink';
+
+  return NextLink;
 });
 
-describe("Hero", () => {
-  it("renders the main heading", () => {
+describe('Hero', () => {
+  it('renders the main heading', () => {
     render(<Hero />);
 
     expect(screen.getByText(/your concert recap,/i)).toBeInTheDocument();
   });
 
-  it("renders the description text", () => {
+  it('renders the description text', () => {
     render(<Hero />);
 
     expect(
@@ -24,17 +33,17 @@ describe("Hero", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the register concerts button with correct link", () => {
+  it('renders the register concerts button with correct link', () => {
     render(<Hero />);
 
-    const link = screen.getByRole("link", {
+    const link = screen.getByRole('link', {
       name: /register concerts/i,
     });
 
-    expect(link).toHaveAttribute("href", "/new-concert");
+    expect(link).toHaveAttribute('href', '/new-concert');
   });
 
-  it("renders all cards descriptions", () => {
+  it('renders all cards descriptions', () => {
     render(<Hero />);
 
     expect(
