@@ -5,10 +5,6 @@ pre-commit:
       glob: '*.{js,jsx,mjs,ts,tsx,css,json,md}'
       stage_fixed: true
 
-    validate:
-      run: npx tsc --noEmit --skipLibCheck
-      glob: '*.{ts,tsx}'
-
 pre-push:
   commands:
     validate:
