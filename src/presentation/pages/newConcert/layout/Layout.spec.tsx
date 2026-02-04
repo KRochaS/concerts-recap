@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react';
-
+import { render, screen } from '@/lib/test-utils';
 import { Layout } from './Layout';
 import { NewConcertStepEnum } from '@/presentation/ui-model/newConcert/newConcertFlow';
 
