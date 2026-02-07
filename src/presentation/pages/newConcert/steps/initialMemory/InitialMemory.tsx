@@ -1,11 +1,9 @@
-import { Button } from "@/presentation/shared/components/button/Button";
-import { DatePicker } from "@/presentation/shared/components/datepicker/Datepicker";
-import { Input } from "@/presentation/shared/components/input/Input";
-import { Textarea } from "@/presentation/shared/components/textarea/Textarea";
-import { NewConcertStepProps } from "@/presentation/ui-model/newConcert/newConcertFlow";
-import {
- ArrowRight,
-} from "lucide-react";
+import { Button } from '@/presentation/shared/components/button/Button';
+import { DatePicker } from '@/presentation/shared/components/datepicker/Datepicker';
+import { Input } from '@/presentation/shared/components/input/Input';
+import { Textarea } from '@/presentation/shared/components/textarea/Textarea';
+import { NewConcertStepProps } from '@/presentation/ui-model/newConcert/newConcertFlow';
+import { ArrowRight } from 'lucide-react';
 
 export function InitialMemory({ onContinue }: NewConcertStepProps) {
   return (
@@ -29,7 +27,10 @@ export function InitialMemory({ onContinue }: NewConcertStepProps) {
       </div>
 
       <div className="mt-16 flex gap-4">
-        <Button className="text-md" onClick={onContinue}> NEXT <ArrowRight /></Button>
+        <Button type="button" className="text-md" onClick={onContinue}>
+          {' '}
+          NEXT <ArrowRight />
+        </Button>
       </div>
     </form>
   );
