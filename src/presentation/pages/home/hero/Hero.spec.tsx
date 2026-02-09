@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Hero } from './Hero';
-import userEvent from '@testing-library/user-event';
 
 const nextLinkMock = jest.fn();
 

@@ -66,9 +66,8 @@ export const OrganizeMemory = ({ onBack }: NewConcertStepProps) => {
   const handleSave = () => router.push('/concerts');
 
   return (
-    <div className="mx-auto max-w-[1325px] px-4">
+    <div className="mx-auto max-w-331.25 px-4">
       <form className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-12">
-        {/* COLUNA ESQUERDA */}
         <section className="flex flex-col gap-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <DatePicker label="DATE" value={date} onChange={setDate} />
@@ -90,13 +89,11 @@ export const OrganizeMemory = ({ onBack }: NewConcertStepProps) => {
             <Input label="BEST LIVE SONG" />
           </div>
 
-          <Textarea label="OTHER THOUGHTS" className="min-h-[120px]" />
+          <Textarea label="OTHER THOUGHTS" className="min-h-30" />
           <TicketUpload />
         </section>
 
-        {/* COLUNA DIREITA */}
         <section className="flex flex-col gap-12">
-          {/* EXPERIENCE TAGS */}
           <div className="flex flex-col gap-4">
             <label className="text-[11px] font-bold text-zinc-500 tracking-[0.2em] uppercase">
               Experience Tags
@@ -116,7 +113,6 @@ export const OrganizeMemory = ({ onBack }: NewConcertStepProps) => {
             </div>
           </div>
 
-          {/* RATINGS */}
           <div className="flex flex-col gap-12">
             <p className="text-[10px] font-bold text-zinc-500 tracking-[0.2em] uppercase">
               Ratings
@@ -164,7 +160,7 @@ export const OrganizeMemory = ({ onBack }: NewConcertStepProps) => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-4 w-[140px] mt-10">
+              <div className="flex flex-col items-center gap-4 w-35 mt-10">
                 <p className="text-[10px] font-bold text-zinc-500 tracking-[0.15em] uppercase text-center">
                   Overall Rating
                 </p>
@@ -174,7 +170,6 @@ export const OrganizeMemory = ({ onBack }: NewConcertStepProps) => {
 
             <hr className="hidden lg:block border-zinc-800" />
 
-            {/* SETLIST + ENERGY */}
             <div className="flex flex-col lg:flex-row lg:justify-between gap-12">
               <div className="flex flex-col gap-4">
                 <p className="text-[10px] font-bold text-zinc-500 tracking-[0.2em] uppercase">
