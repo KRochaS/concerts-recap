@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="app-background">
       <body
-        className={`${workSansDisplay.className} ${satisfyDisplay.variable} antialiased text-content-body h-screen`}
+        className={`${workSansDisplay.className} ${satisfyDisplay.variable} antialiased text-content-body min-h-screen flex flex-col`}
       >
         <Header />
         {children}

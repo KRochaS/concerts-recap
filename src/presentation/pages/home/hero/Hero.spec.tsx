@@ -1,6 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Hero } from './Hero';
+import userEvent from '@testing-library/user-event';
+
+const nextLinkMock = jest.fn();
 
 jest.mock('next/link', () => {
   const NextLink = ({
@@ -9,22 +12,27 @@ jest.mock('next/link', () => {
   }: {
     href: string;
     children: React.ReactNode;
-  }) => <a href={href}>{children}</a>;
-
+  }) => {
+    nextLinkMock(href);
+    return <a href={href}>{children}</a>;
+  };
   NextLink.displayName = 'NextLink';
-
   return NextLink;
 });
 
+const makeSut = () => {
+  return render(<Hero />);
+};
+
 describe('Hero', () => {
   it('renders the main heading', () => {
-    render(<Hero />);
+    makeSut();
 
     expect(screen.getByText(/your concert recap,/i)).toBeInTheDocument();
   });
 
   it('renders the description text', () => {
-    render(<Hero />);
+    makeSut();
 
     expect(
       screen.getByText(
@@ -34,7 +42,7 @@ describe('Hero', () => {
   });
 
   it('renders the register concerts button with correct link', () => {
-    render(<Hero />);
+    makeSut();
 
     const link = screen.getByRole('link', {
       name: /register concerts/i,
@@ -44,7 +52,7 @@ describe('Hero', () => {
   });
 
   it('renders all cards descriptions', () => {
-    render(<Hero />);
+    makeSut();
 
     expect(
       screen.getByText(/recap your concerts moments/i)
@@ -57,5 +65,15 @@ describe('Hero', () => {
     expect(
       screen.getByText(/record the distance you traveled/i)
     ).toBeInTheDocument();
+  });
+
+  describe('New Concert', () => {
+    it('should navigate to new concert page', async () => {
+      nextLinkMock.mockClear();
+
+      makeSut();
+
+      expect(nextLinkMock).toHaveBeenCalledWith('/new-concert');
+    });
   });
 });

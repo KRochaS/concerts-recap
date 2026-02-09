@@ -52,6 +52,7 @@ const TicketUpload = () => {
             <Image
               src={preview}
               alt="Ticket Preview"
+              fill
               className="w-full h-full object-contain p-2"
             />
             <button

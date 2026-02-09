@@ -26,10 +26,12 @@ import {
   Users,
   Zap,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export function OrganizeMemory({ onBack }: NewConcertStepProps) {
+export const OrganizeMemory = ({ onBack }: NewConcertStepProps) => {
   const [date, setDate] = useState<Date>();
+  const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const badges = [
@@ -60,6 +62,8 @@ export function OrganizeMemory({ onBack }: NewConcertStepProps) {
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
+
+  const handleSave = () => router.push('/concerts');
 
   return (
     <div className="mx-auto max-w-[1325px] px-4">
@@ -198,8 +202,8 @@ export function OrganizeMemory({ onBack }: NewConcertStepProps) {
         <Button onClick={onBack}>
           <ArrowLeft /> back
         </Button>
-        <Button>Save</Button>
+        <Button onClick={handleSave}>Save</Button>
       </div>
     </div>
   );
-}
+};

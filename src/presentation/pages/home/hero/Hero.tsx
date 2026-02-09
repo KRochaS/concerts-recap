@@ -4,7 +4,7 @@ import Card from '../../../shared/components/card/Card';
 
 export function Hero() {
   return (
-    <main className="flex-1 grid place-items-center px-6 mt-20">
+    <main className="flex-1 grid place-items-center px-6">
       <div className="max-w-[1325px]">
         <section className="grid grid-cols-1 gap-9 md:grid-cols-2 md:items-center">
           <div className="space-y-6">
