@@ -1,7 +1,17 @@
+import { ConcertCardContent } from '@/presentation/pages/concerts/components/ConcertCardContent/ConcertCardContent';
+
 export default function ConcertsPage() {
   return (
-    <div className="flex flex-1 items-center justify-center">
-      <h1 className="text-4xl font-bold text-white">Concerts Page</h1>
-    </div>
+    <ConcertCardContent
+      concerts={[
+        {
+          id: '1',
+          artist: 'Arctic Monkeys',
+          location: 'Manchester, O2 Apollo',
+          date: 'March 16, 2025',
+          kmTraveled: 288,
+        },
+      ]}
+    />
   );
 }

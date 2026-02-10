@@ -1,30 +1,25 @@
-import { IconBaseProps } from "react-icons";
+import { IconBaseProps } from 'react-icons';
 
 export interface BatteryIcons {
   [key: number]: React.ComponentType<IconBaseProps>;
 }
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
-  variant?: "primary" | "secondary" | "outlined";
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outlined';
 }
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   label?: string;
-  labelPosition?: "top" | "side";
+  labelPosition?: 'top' | 'side';
   labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
 }
 
-export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-    id?: string;
-    label?: string;
-    labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
-  }
-
+export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  id?: string;
+  label?: string;
+  labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
+}
 
 export interface CardProps {
   title?: string;
