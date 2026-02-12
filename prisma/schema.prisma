@@ -11,17 +11,41 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model ConcertMemory {
-  id        String   @id @default(cuid())
-  
-  description  String   @db.Text
+  id           String   @id @default(cuid())
+
+  // Dados iniciais (do primeiro step)
   date         DateTime
   artist       String
   venue        String
   city         String
+  
+  // Dados do Organize Memory (preenchidos após IA sugerir)
+  tour         String?
+  support      String?
+  songMissed   String?  @map("song_missed")
+  bestLiveSong String?  @map("best_live_song")
+  description  String?  @db.Text
+  kmTraveled   Int?     @map("km_traveled")
+  
+  // Ratings
+  entranceRating    Int?    @map("entrance_rating")
+  supportActRating  Int?    @map("support_act_rating")
+  mainActRating     Int?    @map("main_act_rating")
+  crowdRating       Int?    @map("crowd_rating")
+  stageShowRating   Int?    @map("stage_show_rating")
+  moodRating        Int?    @map("mood_rating")
+  overallRating     Int?    @map("overall_rating")
+  setlistRating     Int?    @map("setlist_rating")
+  energyAfter       Int?    @map("energy_after")
+  
+  // Experience Tags (array de strings)
+  experienceTags    String[]   @default([]) @map("experience_tags")
+  
+  // Ticket image
+  ticketImageUrl    String? @map("ticket_image_url")
   
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
