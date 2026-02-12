@@ -1,17 +1,12 @@
-import { ConcertCardContent } from '@/presentation/pages/concerts/components/ConcertCardContent/ConcertCardContent';
+import { prisma } from '@/lib/prisma';
+import { ConcertCardContent } from '@/presentation/pages/concerts/concertCardContent/ConcertCardContent';
+import { PrismaConcertRepository } from '@/infra/repository/prisma-concert.repository';
+import { SearchConcertSummaryUseCase } from '@/core/application/concerts/search-concert-summary.usecase';
 
-export default function ConcertsPage() {
-  return (
-    <ConcertCardContent
-      concerts={[
-        {
-          id: '1',
-          artist: 'Arctic Monkeys',
-          location: 'Manchester, O2 Apollo',
-          date: 'March 16, 2025',
-          kmTraveled: 288,
-        },
-      ]}
-    />
-  );
+export default async function ConcertsPage() {
+  const repository = new PrismaConcertRepository(prisma);
+  const useCase = new SearchConcertSummaryUseCase(repository);
+  const summaries = await useCase.execute();
+
+  return <ConcertCardContent concerts={summaries} />;
 }

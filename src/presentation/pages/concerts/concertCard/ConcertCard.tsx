@@ -1,30 +1,26 @@
+import { ConcertSummary } from '@/core/domain/concerts/concert.entity';
 import { Star } from 'lucide-react';
-
-interface ConcertCardProps {
-  artist: string;
-  location: string;
-  date: string;
-  kmTraveled: number;
-  rating: number;
-  tags: Array<{ id: number; label: string; emoji?: string }>;
-  beforeBattery?: number;
-  afterBattery?: number;
-}
 
 export const ConcertCard = ({
   artist,
-  location,
+  city,
   date,
   kmTraveled,
-  rating,
-}: ConcertCardProps) => {
+  setlistRating,
+}: ConcertSummary) => {
+  const formattedDate = new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <div className="rounded-2xl border border-zinc-800 bg-[#0a0b14] p-6 flex flex-col gap-4">
       {/* Header */}
       <div>
         <h3 className="text-lg font-semibold text-white">{artist}</h3>
-        <p className="text-sm text-zinc-400">{location}</p>
-        <p className="text-xs text-zinc-500 mt-1">{date}</p>
+        <p className="text-sm text-zinc-400">{city}</p>
+        <p className="text-xs text-zinc-500 mt-1">{formattedDate}</p>
         <p className="text-xs text-zinc-500">{kmTraveled} km travelled</p>
       </div>
 
@@ -35,7 +31,9 @@ export const ConcertCard = ({
             key={i}
             size={16}
             className={
-              i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-zinc-700'
+              i < (setlistRating ?? 0)
+                ? 'fill-yellow-400 text-yellow-400'
+                : 'text-zinc-700'
             }
           />
         ))}

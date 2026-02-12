@@ -1,23 +1,22 @@
 'use client';
 
 import { Button } from '@/presentation/shared/components/button/Button';
-import { ConcertCard } from '../concertCard/ConcertCard';
-import { Plus } from 'lucide-react';
+import { ConcertList } from '../concertList/ConcertList';
 import Link from 'next/link';
 import { Input } from '@/presentation/shared/components/input/Input';
-import { startTransition, useState } from 'react';
+import {
+  Activity,
+  startTransition,
+  useActionState,
+  useRef,
+  useState,
+} from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-
-type Concert = {
-  id: string;
-  artist: string;
-  location: string;
-  date: string;
-  kmTraveled: number;
-};
+import { ConcertSummary } from '@/core/domain/concerts/concert.entity';
+import { searchConcertAction } from '@/app/actions/concert.actions';
 
 export type ConcertCardContentProps = {
-  concerts: Concert[];
+  concerts: ConcertSummary[];
 };
 
 // const mockConcerts = [
@@ -67,9 +66,22 @@ export type ConcertCardContentProps = {
 // ];
 
 export function ConcertCardContent({ concerts }: ConcertCardContentProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') ?? '');
-  const router = useRouter();
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const [searchState, searchAction, isPending] = useActionState(
+    searchConcertAction,
+    {
+      success: true,
+      concerts: concerts,
+    }
+  );
+
+  const hasQuery = query.trim().length > 0;
+  const concertList = hasQuery ? (searchState.concerts ?? concerts) : concerts;
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuery = event.target.value;
@@ -80,6 +92,7 @@ export function ConcertCardContent({ concerts }: ConcertCardContentProps) {
         ? `/concerts?q=${encodeURIComponent(newQuery)}`
         : '/concerts';
       router.push(url, { scroll: false });
+      formRef.current?.requestSubmit();
     });
   };
 
@@ -101,37 +114,23 @@ export function ConcertCardContent({ concerts }: ConcertCardContentProps) {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-8">
-        <Input
-          placeholder="Search by artist, venue, or city..."
-          data-testid="search-input"
-          type="text"
-          value={query}
-          onChange={handleQueryChange}
-        />
-        <select className="px-4 py-2 rounded-lg bg-[#0f0f10] border border-zinc-800 text-white focus:outline-none focus:border-zinc-700">
-          <option>All Years</option>
-          <option>2025</option>
-          <option>2024</option>
-          <option>2023</option>
-        </select>
-        <select className="px-4 py-2 rounded-lg bg-[#0f0f10] border border-zinc-800 text-white focus:outline-none focus:border-zinc-700">
-          <option>All Venues</option>
-        </select>
+      <div className="flex flex-col gap-4 mb-8">
+        <form ref={formRef} action={searchAction} className="w-full">
+          <Input
+            name="query"
+            placeholder="Search by artist, venue, or city..."
+            data-testid="search-input"
+            type="text"
+            value={query}
+            onChange={handleQueryChange}
+          />
+        </form>
+        <Activity mode={isPending ? 'hidden' : 'visible'}>
+          <ConcertList concerts={concertList} />
+        </Activity>
       </div>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
-        {concerts.map((concert) => (
-          <ConcertCard rating={0} tags={[]} key={concert.id} {...concert} />
-        ))}
-      </div>
-
-      <div>
-        {concerts.map((concert) => (
-          <p key={concert.id}> {concert.artist} </p>
-        ))}
-      </div>
 
       {/* Load More Button */}
       <div className="flex justify-center">

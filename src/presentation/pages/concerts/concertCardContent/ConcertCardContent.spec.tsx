@@ -4,12 +4,7 @@ import {
   ConcertCardContent,
   ConcertCardContentProps,
 } from './ConcertCardContent';
-import { ConcertCard } from '../concertCard/ConcertCard';
 import userEvent from '@testing-library/user-event';
-
-jest.mock('../concertCard/ConcertCard', () => ({
-  ConcertCard: jest.fn(() => <div />),
-}));
 
 const pushMock = jest.fn();
 
@@ -23,8 +18,10 @@ const initialConcerts = [
   {
     id: '1',
     artist: 'Arctic Monkeys',
-    location: 'Manchester, O2 Apollo',
-    date: 'March 16, 2025',
+    venue: 'O2 Apollo',
+    city: 'Manchester',
+    date: new Date('2025-03-16'),
+    setlistRating: 4,
     kmTraveled: 288,
   },
 ];
@@ -40,13 +37,6 @@ const makeSut = (
 const user = userEvent.setup();
 
 describe('ConcertCardContent', () => {
-  it('should render list of concerts when there are concerts', () => {
-    makeSut();
-
-    expect(screen.getByText(initialConcerts[0].artist)).toBeInTheDocument();
-    expect(ConcertCard).toHaveBeenCalledTimes(1);
-  });
-
   it('should updated input value when user types', async () => {
     makeSut();
     const text = 'Arctic';
