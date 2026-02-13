@@ -6,6 +6,8 @@ import {
 } from './ConcertCardContent';
 import userEvent from '@testing-library/user-event';
 
+jest.mock('@/lib/prisma', () => ({ prisma: {} }));
+
 const pushMock = jest.fn();
 
 let mockSearchParams = new URLSearchParams();
