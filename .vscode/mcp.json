@@ -1,0 +1,22 @@
+{
+  "servers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest",
+        "--api-key",
+        "${input:context7-access-token}"
+      ],
+      "type": "stdio"
+    },
+  },
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "context7-access-token",
+      "description": "context7 token",
+      "password": true
+    }
+  ]
+}
