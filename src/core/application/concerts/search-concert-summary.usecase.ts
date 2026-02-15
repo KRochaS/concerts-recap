@@ -5,7 +5,7 @@ export class SearchConcertSummaryUseCase {
   constructor(private concertRepository: ConcertRepository) {}
 
   async execute(term?: string): Promise<ConcertSummary[]> {
-    const query = term?.toLowerCase() ?? '';
+    const query = term?.trim().toLowerCase() ?? '';
 
     if (!query) {
       return this.concertRepository.findManySummaries();
