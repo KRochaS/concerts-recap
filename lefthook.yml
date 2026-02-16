@@ -5,6 +5,11 @@ pre-commit:
       glob: '*.{js,jsx,mjs,ts,tsx,css,json,md}'
       stage_fixed: true
 
+commit-msg:
+  commands:
+    commitlint:
+      run: npx commitlint --edit {1}
+
 pre-push:
   commands:
     validate:
