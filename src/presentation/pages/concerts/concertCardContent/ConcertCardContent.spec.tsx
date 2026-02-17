@@ -5,6 +5,7 @@ import {
   ConcertCardContentProps,
 } from './ConcertCardContent';
 import userEvent from '@testing-library/user-event';
+import { listConcertSummariesResponse } from '@/tests/mocks/data-providers/concert-summary.data-provider';
 
 const pushMock = jest.fn();
 
@@ -14,21 +15,9 @@ jest.mock('next/navigation', () => ({
   useSearchParams: () => mockSearchParams,
 }));
 
-const initialConcerts = [
-  {
-    id: '1',
-    artist: 'Arctic Monkeys',
-    venue: 'O2 Apollo',
-    city: 'Manchester',
-    date: new Date('2025-03-16'),
-    setlistRating: 4,
-    kmTraveled: 288,
-  },
-];
-
 const makeSut = (
   {
-    concerts = initialConcerts,
+    concerts = listConcertSummariesResponse(),
   }: ConcertCardContentProps = {} as ConcertCardContentProps
 ) => {
   return render(<ConcertCardContent concerts={concerts} />);
@@ -65,6 +54,36 @@ describe('ConcertCardContent', () => {
       await user.clear(searchInput);
       const lastClearCall = pushMock.mock.calls.at(-1);
       expect(lastClearCall?.[0]).toBe('/concerts');
+    });
+
+    it('should submit the form when search term is added', async () => {
+      const submitSpy = jest
+        .spyOn(HTMLFormElement.prototype, 'requestSubmit')
+        .mockImplementation(undefined);
+      makeSut();
+
+      const searchInput = screen.getByTestId(
+        'search-input'
+      ) as HTMLInputElement;
+
+      await user.type(searchInput, 'Arctic Monkeys');
+
+      expect(submitSpy).toHaveBeenCalled();
+      submitSpy.mockRestore();
+    });
+
+    it('should automatically submit on mount when a query is present', async () => {
+      const submitSpy = jest
+        .spyOn(HTMLFormElement.prototype, 'requestSubmit')
+        .mockImplementation(undefined);
+      const text = 'Arctic';
+      const searchParam = new URLSearchParams(`q=${text}`);
+      mockSearchParams = searchParam;
+
+      makeSut();
+
+      expect(submitSpy).toHaveBeenCalled();
+      submitSpy.mockRestore();
     });
 
     it('should initialize search input with query param value if present', () => {
