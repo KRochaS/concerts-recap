@@ -16,6 +16,8 @@ const concerts = [
     date: new Date('2025-03-16'),
     setlistRating: 4,
     kmTraveled: 288,
+    createdAt: new Date('2025-03-17'),
+    updatedAt: new Date('2025-03-17'),
   },
   {
     id: '2',
@@ -25,6 +27,8 @@ const concerts = [
     date: new Date('2025-02-08'),
     setlistRating: 5,
     kmTraveled: 120,
+    createdAt: new Date('2025-02-09'),
+    updatedAt: new Date('2025-02-09'),
   },
 ];
 

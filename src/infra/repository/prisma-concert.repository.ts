@@ -10,6 +10,8 @@ const CONCERT_SELECT = {
   date: true,
   setlistRating: true,
   kmTraveled: true,
+  createdAt: true,
+  updatedAt: true,
 };
 
 export class PrismaConcertRepository implements ConcertRepository {

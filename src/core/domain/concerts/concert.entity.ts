@@ -36,7 +36,15 @@ export type Concert = {
 
 export type ConcertSummary = Pick<
   Concert,
-  'id' | 'artist' | 'venue' | 'city' | 'date' | 'setlistRating' | 'kmTraveled'
+  | 'id'
+  | 'artist'
+  | 'venue'
+  | 'city'
+  | 'date'
+  | 'setlistRating'
+  | 'kmTraveled'
+  | 'createdAt'
+  | 'updatedAt'
 >;
 
 export type ConcertInitialData = Pick<
