@@ -8,6 +8,7 @@ import {
   Activity,
   startTransition,
   useActionState,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -95,6 +96,13 @@ export function ConcertCardContent({ concerts }: ConcertCardContentProps) {
       formRef.current?.requestSubmit();
     });
   };
+
+  useEffect(() => {
+    if (!hasQuery) {
+      return;
+    }
+    formRef.current?.requestSubmit();
+  }, [hasQuery]);
 
   return (
     <div className="mx-auto max-w-331.25 px-4 py-10">
