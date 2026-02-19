@@ -1,4 +1,4 @@
-import { Radio } from '../inputRadio/InputRadio';
+import { Radio } from '@/presentation/shared/components/inputRadio/InputRadio';
 
 export function RadioScale() {
   return (

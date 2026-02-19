@@ -1,5 +1,5 @@
 import { PrismaConcertRepository } from '@/infra/repository/prisma-concert.repository';
-import { listConcertSummariesResponse } from '../../mocks/data-providers/concert-summary.data-provider';
+import { listConcertSummariesResponse } from '@/tests/mocks/data-providers/concert-summary.data-provider';
 import { ConcertSummary } from '@/core/domain/concerts/concert.entity';
 import { PrismaClient } from '@/generated/prisma/internal/class';
 

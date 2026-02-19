@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
-import { InputProps } from "../../ui-model/shared.model";
+import { cn } from '@/lib/utils';
+import { InputProps } from '@/presentation/shared/ui-model/shared.model';
 
 export function Checkbox({ id, label, className, ...props }: InputProps) {
   return (
     <div className="flex items-center gap-3">
-      <label htmlFor={id} className={cn("uppercase text-right", className)}>
+      <label htmlFor={id} className={cn('uppercase text-right', className)}>
         {label}
       </label>
       <div className="relative">

@@ -1,7 +1,6 @@
-
-import { cn } from "@/lib/utils";
-import { FaAngleDown } from "react-icons/fa6";
-import { SelectProps } from "../../ui-model/shared.model";
+import { cn } from '@/lib/utils';
+import { FaAngleDown } from 'react-icons/fa6';
+import { SelectProps } from '@/presentation/shared/ui-model/shared.model';
 
 export function Select({
   id,

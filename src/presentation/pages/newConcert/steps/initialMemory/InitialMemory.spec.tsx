@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { InitialMemory } from './InitialMemory';
+import { InitialMemory } from '@/presentation/pages/newConcert/steps/initialMemory/InitialMemory';
 import userEvent from '@testing-library/user-event';
 
 const makeSut = (onContinue = jest.fn()) => {

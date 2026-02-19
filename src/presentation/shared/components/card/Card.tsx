@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { cn } from '../../lib/utils';
-import { CardProps } from '../../ui-model/shared.model';
+import { cn } from '@/presentation/shared/lib/utils';
+import { CardProps } from '@/presentation/shared/ui-model/shared.model';
 
 export default function Card({
   title,

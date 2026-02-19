@@ -9,7 +9,10 @@ import {
   FaBatteryThreeQuarters,
 } from 'react-icons/fa6';
 
-import { BatteryIcons, BatteryProps } from '../../ui-model/shared.model';
+import {
+  BatteryIcons,
+  BatteryProps,
+} from '@/presentation/shared/ui-model/shared.model';
 
 export function Battery({ id, label, ...props }: BatteryProps) {
   const [level, setLevel] = useState(0);

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { OrganizeMemory } from './OrganizeMemory';
+import { OrganizeMemory } from '@/presentation/pages/newConcert/steps/organizeMemory/OrganizeMemory';
 import userEvent from '@testing-library/user-event';
 
 const pushMock = jest.fn();

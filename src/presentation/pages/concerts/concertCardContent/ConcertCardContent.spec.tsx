@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import {
   ConcertCardContent,
   ConcertCardContentProps,
-} from './ConcertCardContent';
+} from '@/presentation/pages/concerts/concertCardContent/ConcertCardContent';
 import userEvent from '@testing-library/user-event';
 import { listConcertSummariesResponse } from '@/tests/mocks/data-providers/concert-summary.data-provider';
 

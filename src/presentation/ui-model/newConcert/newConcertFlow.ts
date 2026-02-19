@@ -1,9 +1,9 @@
-import { InitialMemory } from "../../pages/newConcert/steps/initialMemory/InitialMemory";
-import { OrganizeMemory } from "../../pages/newConcert/steps/organizeMemory/OrganizeMemory";
+import { InitialMemory } from '@/presentation/pages/newConcert/steps/initialMemory/InitialMemory';
+import { OrganizeMemory } from '@/presentation/pages/newConcert/steps/organizeMemory/OrganizeMemory';
 
 export enum NewConcertStepEnum {
-  INITIAL = "INITIAL",
-  ORGANIZE = "ORGANIZE",
+  INITIAL = 'INITIAL',
+  ORGANIZE = 'ORGANIZE',
 }
 
 export type NewConcertStepProps = {
@@ -23,5 +23,5 @@ export const STEP_DESCRIPTION: Record<NewConcertStepEnum, string> = {
   [NewConcertStepEnum.INITIAL]:
     "Capture the essence of the performance while it's still vivid.",
   [NewConcertStepEnum.ORGANIZE]:
-    "Fill in the details below to save your experience.",
+    'Fill in the details below to save your experience.',
 };

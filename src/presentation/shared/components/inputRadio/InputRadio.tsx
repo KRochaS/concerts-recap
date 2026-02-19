@@ -1,6 +1,5 @@
-import { cn } from "@/lib/utils";
-import { InputProps } from "../../ui-model/shared.model";
-
+import { cn } from '@/lib/utils';
+import { InputProps } from '@/presentation/shared/ui-model/shared.model';
 
 export function Radio({ id, label, labelProps, ...props }: InputProps) {
   return (
@@ -15,7 +14,7 @@ export function Radio({ id, label, labelProps, ...props }: InputProps) {
         />
         <label
           htmlFor={id}
-          className={cn("text-right", label && "pl-2")}
+          className={cn('text-right', label && 'pl-2')}
           {...labelProps}
         >
           {label}

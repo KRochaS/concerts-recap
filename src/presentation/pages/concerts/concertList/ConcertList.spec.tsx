@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ConcertList } from './ConcertList';
-import { ConcertCard } from '../concertCard/ConcertCard';
+import { ConcertList } from '@/presentation/pages/concerts/concertList/ConcertList';
+import { ConcertCard } from '@/presentation/pages/concerts/concertCard/ConcertCard';
 
 jest.mock('../concertCard/ConcertCard', () => ({
   ConcertCard: jest.fn(() => <div />),

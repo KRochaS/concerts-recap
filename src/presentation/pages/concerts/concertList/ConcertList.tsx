@@ -1,5 +1,5 @@
 import { ConcertSummary } from '@/core/domain/concerts/concert.entity';
-import { ConcertCard } from '../concertCard/ConcertCard';
+import { ConcertCard } from '@/presentation/pages/concerts/concertCard/ConcertCard';
 
 export type ConcertListProps = {
   concerts: ConcertSummary[];

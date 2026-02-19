@@ -1,5 +1,5 @@
-import { cn } from '../../lib/utils';
-import { ButtonProps } from '../../ui-model/shared.model';
+import { cn } from '@/presentation/shared/lib/utils';
+import { ButtonProps } from '@/presentation/shared/ui-model/shared.model';
 
 export const Button = ({
   children,

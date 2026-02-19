@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/presentation/shared/components/button/Button';
-import { ConcertList } from '../concertList/ConcertList';
+import { ConcertList } from '@/presentation/pages/concerts/concertList/ConcertList';
 import Link from 'next/link';
 import { Input } from '@/presentation/shared/components/input/Input';
 import {

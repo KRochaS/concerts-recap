@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { Button } from '../../../shared/components/button/Button';
-import Card from '../../../shared/components/card/Card';
+import { Button } from '@/presentation/shared/components/button/Button';
+import Card from '@/presentation/shared/components/card/Card';
 
 export function Hero() {
   return (
     <main className="flex-1 grid place-items-center px-6">
-      <div className="max-w-[1325px]">
+      <div className="max-w-331.25">
         <section className="grid grid-cols-1 gap-9 md:grid-cols-2 md:items-center">
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white">

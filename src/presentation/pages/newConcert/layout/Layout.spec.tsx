@@ -1,5 +1,5 @@
 import { render, screen } from '@/lib/test-utils';
-import { Layout } from './Layout';
+import { Layout } from '@/presentation/pages/newConcert/layout/Layout';
 import { NewConcertStepEnum } from '@/presentation/ui-model/newConcert/newConcertFlow';
 
 const makeSut = (step: NewConcertStepEnum = NewConcertStepEnum.INITIAL) => {
