@@ -1,8 +1,13 @@
 pre-commit:
   commands:
-    check:
+    format:
       run: npx prettier --write {staged_files}
       glob: '*.{js,jsx,mjs,ts,tsx,css,json,md}'
+      stage_fixed: true
+
+    lint:
+      run: npx eslint --fix {staged_files}
+      glob: '*.{js,jsx,mjs,ts,tsx}'
       stage_fixed: true
 
 commit-msg:
@@ -14,10 +19,6 @@ pre-push:
   commands:
     validate:
       run: npx tsc --noEmit --skipLibCheck
-      glob: '*.{ts,tsx}'
-
-    lint:
-      run: npx eslint .
       glob: '*.{ts,tsx}'
 
     test:
