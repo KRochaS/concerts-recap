@@ -2,6 +2,7 @@ import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Work_Sans, Satisfy } from 'next/font/google';
 import { Header } from '@/presentation/shared/components/header/Header';
+import { ToastContainer } from 'react-toastify';
 
 const workSansDisplay = Work_Sans({
   subsets: ['latin'],
@@ -33,6 +34,8 @@ export default function RootLayout({
       >
         <Header />
         {children}
+
+        <ToastContainer position="top-right" />
       </body>
     </html>
   );

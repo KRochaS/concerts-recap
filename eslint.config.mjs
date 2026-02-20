@@ -24,6 +24,11 @@ const eslintConfig = defineConfig([
         'error',
         { allowSameFolder: false, rootDir: 'src', prefix: '@' },
       ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      'no-console': 'error',
     },
   },
 ]);
