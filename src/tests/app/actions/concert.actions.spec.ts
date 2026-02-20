@@ -3,6 +3,7 @@ import {
   searchConcertAction,
 } from '@/app/actions/concert.actions';
 import { listConcertSummariesResponse } from '@/tests/mocks/data-providers/concert-summary.data-provider';
+import { createConcertPayload } from '@/tests/mocks/data-providers/create-concert-action.data-provider';
 
 jest.mock('@/lib/prisma', () => ({ prisma: {} }));
 
@@ -24,6 +25,7 @@ jest.mock('@/core/application/concerts/create-concert.usecase', () => ({
 describe('Server Actions: Concert', () => {
   beforeEach(() => {
     mockedSearchExecute.mockReset();
+    mockedCreateConcertExecute.mockReset();
   });
 
   describe('searchConcertAction', () => {
@@ -97,25 +99,19 @@ describe('Server Actions: Concert', () => {
     it('should create a concert successfully', async () => {
       mockedCreateConcertExecute.mockResolvedValue(undefined);
 
-      const data = {
-        description: 'Test Concert',
-        artist: 'Test Artist',
-        venue: 'Test Venue',
-        city: 'Test City',
-        date: new Date('2023-01-01'),
-      };
+      const data = createConcertPayload();
       const result = await createConcertAction(data);
       expect(result?.success).toBe(true);
       expect(result?.message).toBe('Concert created successfully.');
     });
     it('should validate the input data and return errors for invalid data', async () => {
-      const data = {
+      const data = createConcertPayload({
         description: '',
         artist: '',
         venue: '',
         city: '',
         date: 'invalid-date' as never as Date,
-      };
+      });
 
       const result = await createConcertAction(data);
 
@@ -131,19 +127,26 @@ describe('Server Actions: Concert', () => {
         new Error('CONCERT_ALREADY_EXISTS')
       );
 
-      const data = {
-        description: 'Test Concert',
-        artist: 'Test Artist',
-        venue: 'Test Venue',
-        city: 'Test City',
-        date: new Date('2023-01-01'),
-      };
+      const data = createConcertPayload();
 
       const result = await createConcertAction(data);
 
       expect(result?.success).toBe(false);
       expect(result?.message).toBe(
         'Concert already exists. Please check the details and try again.'
+      );
+    });
+
+    it('should return a generic error when creation fails', async () => {
+      mockedCreateConcertExecute.mockRejectedValue(new Error('UNKNOWN_ERROR'));
+
+      const data = createConcertPayload();
+
+      const result = await createConcertAction(data);
+
+      expect(result?.success).toBe(false);
+      expect(result?.message).toBe(
+        'Failed to create concert. Please try again later.'
       );
     });
   });

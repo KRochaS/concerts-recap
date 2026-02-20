@@ -2,8 +2,19 @@ import { PrismaConcertRepository } from '@/infra/repository/prisma-concert.repos
 import { listConcertSummariesResponse } from '@/tests/mocks/data-providers/concert-summary.data-provider';
 import { ConcertSummary } from '@/core/domain/concerts/concert.entity';
 import { PrismaClient } from '@/generated/prisma/internal/class';
+import { CreateConcertDTO } from '@/core/application/concerts/create-concert.dto';
+import { createConcertPayload } from '@/tests/mocks/data-providers/create-concert-action.data-provider';
 
 type ConcertDelegateMock = {
+  create: jest.MockedFunction<
+    (args: { data: CreateConcertDTO }) => Promise<void>
+  >;
+  findFirst: jest.MockedFunction<
+    (args: {
+      where: { artist: string; venue: string; city: string; date: Date };
+      select?: Record<string, boolean>;
+    }) => Promise<ConcertSummary | null>
+  >;
   findMany: jest.MockedFunction<
     (args: {
       select?: Record<string, boolean>;
@@ -26,6 +37,8 @@ function createMockPrisma() {
   const mock: PrismaMock = {
     concertMemory: {
       findMany: jest.fn(),
+      findFirst: jest.fn(),
+      create: jest.fn(),
     },
   };
   return mock as never as PrismaClient & PrismaMock;
@@ -50,6 +63,40 @@ describe('PrismaConcertRepository', () => {
   beforeEach(() => {
     prisma = createMockPrisma();
     repository = new PrismaConcertRepository(prisma);
+  });
+
+  describe('create', () => {
+    it('should call prisma create with correct data', async () => {
+      const data = createConcertPayload();
+
+      await repository.create(data);
+
+      expect(prisma.concertMemory.create).toHaveBeenCalledWith({
+        data,
+      });
+    });
+  });
+
+  describe('findByConcert', () => {
+    it('should call prisma findFirst with correct where clause and select', async () => {
+      prisma.concertMemory.findFirst.mockResolvedValue(
+        listConcertSummariesResponse()[0]
+      );
+      const data = createConcertPayload();
+
+      const result = await repository.findByConcert(data);
+
+      expect(prisma.concertMemory.findFirst).toHaveBeenCalledWith({
+        where: {
+          artist: data.artist,
+          venue: data.venue,
+          city: data.city,
+          date: data.date,
+        },
+        select: mockSelect,
+      });
+      expect(result).toEqual(listConcertSummariesResponse()[0]);
+    });
   });
 
   describe('findManySummaries', () => {

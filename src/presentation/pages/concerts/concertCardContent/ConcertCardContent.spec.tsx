@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {
   ConcertCardContent,
@@ -86,7 +86,7 @@ describe('ConcertCardContent', () => {
       submitSpy.mockRestore();
     });
 
-    it('should initialize search input with query param value if present', () => {
+    it('should initialize search input with query param value if present', async () => {
       const text = 'q=Arctic';
       const searchParam = new URLSearchParams(`q=${text}`);
       mockSearchParams = searchParam;
@@ -95,7 +95,7 @@ describe('ConcertCardContent', () => {
       const searchInput = screen.getByTestId(
         'search-input'
       ) as HTMLInputElement;
-      expect(searchInput.value).toBe(text);
+      await waitFor(() => expect(searchInput.value).toBe(text));
     });
   });
 });
