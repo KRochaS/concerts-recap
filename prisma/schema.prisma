@@ -17,6 +17,7 @@ model ConcertMemory {
   id           String   @id @default(cuid())
 
   // Dados iniciais (do primeiro step)
+  ticketImageUrl    String? @map("ticket_image_url")
   date         DateTime
   artist       String
   venue        String
@@ -44,8 +45,7 @@ model ConcertMemory {
   // Experience Tags (array de strings)
   experienceTags    String[]   @default([]) @map("experience_tags")
   
-  // Ticket image
-  ticketImageUrl    String? @map("ticket_image_url")
+ 
   
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
