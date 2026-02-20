@@ -16,7 +16,6 @@ export const ConcertCard = ({
 
   return (
     <div className="rounded-2xl border border-zinc-800 bg-[#0a0b14] p-6 flex flex-col gap-4">
-      {/* Header */}
       <div>
         <h3 className="text-lg font-semibold text-white">{artist}</h3>
         <p className="text-sm text-zinc-400">{city}</p>
@@ -24,7 +23,6 @@ export const ConcertCard = ({
         <p className="text-xs text-zinc-500">{kmTraveled} km travelled</p>
       </div>
 
-      {/* Rating */}
       <div className="flex gap-1">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
