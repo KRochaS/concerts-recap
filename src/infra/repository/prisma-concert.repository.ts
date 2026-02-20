@@ -1,3 +1,4 @@
+import { CreateConcertDTO } from '@/core/application/concerts/create-concert.dto';
 import { ConcertSummary } from '@/core/domain/concerts';
 import { ConcertRepository } from '@/core/domain/concerts/concerts.repository';
 import { PrismaClient } from '@/generated/prisma/client';
@@ -16,6 +17,32 @@ const CONCERT_SELECT = {
 
 export class PrismaConcertRepository implements ConcertRepository {
   constructor(private prisma: PrismaClient) {}
+
+  async create(data: CreateConcertDTO): Promise<void> {
+    await this.prisma.concertMemory.create({
+      data: {
+        artist: data.artist,
+        venue: data.venue,
+        city: data.city,
+        date: data.date,
+        description: data.description,
+        ticketImageUrl: data.ticketImageUrl ?? null,
+      },
+    });
+  }
+
+  async findByConcert(data: CreateConcertDTO): Promise<ConcertSummary | null> {
+    const concert = await this.prisma.concertMemory.findFirst({
+      where: {
+        artist: data.artist,
+        venue: data.venue,
+        city: data.city,
+        date: data.date,
+      },
+      select: CONCERT_SELECT,
+    });
+    return concert;
+  }
 
   async findManySummaries(): Promise<ConcertSummary[]> {
     const concerts = await this.prisma.concertMemory.findMany({
