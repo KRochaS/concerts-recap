@@ -21,6 +21,11 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
 }
 
+export interface FieldErrorProps {
+  message?: string;
+  className?: string;
+}
+
 export interface CardProps {
   title?: string;
   date?: string;

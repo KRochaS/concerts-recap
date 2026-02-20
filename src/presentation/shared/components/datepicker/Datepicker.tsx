@@ -10,12 +10,14 @@ interface DatePickerProps {
   value?: Date;
   onChange?: (date?: Date) => void;
   label?: string;
+  dataTestId?: string;
 }
 
 export function DatePicker({
   value,
   onChange,
   label = 'Concert date',
+  dataTestId,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -42,6 +44,7 @@ export function DatePicker({
       <button
         type="button"
         onClick={() => setOpen(!open)}
+        data-testid={dataTestId}
         className={cn(
           'flex h-11 w-full items-center justify-between rounded-lg border px-3 text-sm text-content-body transition-all outline-none',
           'border-border-secondary bg-[#0f0f10] focus:ring-0 focus:ring-offset-0 focus:border-border-secondary active:border-border-secondary'
