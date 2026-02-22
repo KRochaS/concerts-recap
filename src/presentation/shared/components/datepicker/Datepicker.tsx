@@ -50,7 +50,7 @@ export function DatePicker({
           'border-border-secondary bg-[#0f0f10] focus:ring-0 focus:ring-offset-0 focus:border-border-secondary active:border-border-secondary'
         )}
       >
-        {value ? value.toLocaleDateString() : 'Select date'}
+        {value ? value.toLocaleDateString('pt-BR') : 'Select date'}
         <Calendar className="w-4 h-4 opacity-60 text-white" />
       </button>
 
