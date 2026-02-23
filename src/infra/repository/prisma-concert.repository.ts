@@ -32,12 +32,39 @@ export class PrismaConcertRepository implements ConcertRepository {
   }
 
   async findByConcert(data: CreateConcertDTO): Promise<ConcertSummary | null> {
+    // Normaliza a data para UTC 00:00:00 e busca por registros no mesmo dia
+    const inputDate = new Date(data.date);
+    const startOfDay = new Date(
+      Date.UTC(
+        inputDate.getUTCFullYear(),
+        inputDate.getUTCMonth(),
+        inputDate.getUTCDate(),
+        0,
+        0,
+        0,
+        0
+      )
+    );
+    const endOfDay = new Date(
+      Date.UTC(
+        inputDate.getUTCFullYear(),
+        inputDate.getUTCMonth(),
+        inputDate.getUTCDate(),
+        23,
+        59,
+        59,
+        999
+      )
+    );
     const concert = await this.prisma.concertMemory.findFirst({
       where: {
         artist: data.artist,
         venue: data.venue,
         city: data.city,
-        date: data.date,
+        date: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
       },
       select: CONCERT_SELECT,
     });
