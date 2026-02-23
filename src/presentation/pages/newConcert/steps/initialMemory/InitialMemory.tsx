@@ -34,7 +34,7 @@ export const InitialMemory = ({ onContinue }: NewConcertStepProps) => {
     const result = await createConcertAction(data);
 
     if (!result?.success) {
-      toast.error('Failed to create concert. Please try again.');
+      toast.error(result?.message);
       return;
     }
 
