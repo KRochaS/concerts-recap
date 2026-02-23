@@ -44,6 +44,32 @@ function createMockPrisma() {
   return mock as never as PrismaClient & PrismaMock;
 }
 
+function getDayRange(date: Date) {
+  const start = new Date(
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      0,
+      0,
+      0,
+      0
+    )
+  );
+  const end = new Date(
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      23,
+      59,
+      59,
+      999
+    )
+  );
+  return { gte: start, lte: end };
+}
+
 describe('PrismaConcertRepository', () => {
   let prisma: ReturnType<typeof createMockPrisma>;
   let repository: PrismaConcertRepository;
@@ -91,7 +117,7 @@ describe('PrismaConcertRepository', () => {
           artist: data.artist,
           venue: data.venue,
           city: data.city,
-          date: data.date,
+          date: getDayRange(data.date),
         },
         select: mockSelect,
       });
