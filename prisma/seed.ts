@@ -83,7 +83,6 @@ async function main() {
   await seedDatabase();
 }
 
-main().catch((err) => {
-  console.error(err);
+main().catch(() => {
   process.exit(1);
 });
