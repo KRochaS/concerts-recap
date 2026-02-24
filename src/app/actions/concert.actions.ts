@@ -11,6 +11,7 @@ import {
 } from '@/core/application/concerts/create-concert.dto';
 import z from 'zod';
 import { CreateConcertUseCase } from '@/core/application/concerts/create-concert.usecase';
+import { revalidatePath } from 'next/cache';
 
 type SearchFormState = {
   success: boolean;
@@ -39,6 +40,7 @@ export async function createConcertAction(data: CreateConcertDTO) {
     const repository = new PrismaConcertRepository(prisma);
     const useCase = new CreateConcertUseCase(repository);
     await useCase.execute(validated.data);
+    revalidatePath('/', 'layout');
   } catch (error) {
     const _error = error as Error;
     if (_error.message === 'CONCERT_ALREADY_EXISTS') {
@@ -71,6 +73,7 @@ export async function searchConcertAction(
 
   try {
     const summaries = await useCase.execute(term);
+    revalidatePath('/', 'layout');
     return {
       success: true,
       concerts: summaries,
