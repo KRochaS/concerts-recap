@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/presentation/shared/components/button/Button';
 import { ConcertList } from '@/presentation/pages/concerts/concertList/ConcertList';
 import { Input } from '@/presentation/shared/components/input/Input';
 import { Activity } from 'react';
@@ -39,10 +38,6 @@ export function ConcertCardContent({ concerts }: ConcertCardContentProps) {
         <Activity mode={isPending ? 'hidden' : 'visible'}>
           <ConcertList concerts={concertList} />
         </Activity>
-      </div>
-
-      <div className="flex justify-center">
-        <Button>Load More Memories</Button>
       </div>
     </div>
   );
