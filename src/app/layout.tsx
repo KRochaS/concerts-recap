@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Work_Sans, Satisfy } from 'next/font/google';
 import { Header } from '@/presentation/shared/components/header/Header';
 import { ToastContainer } from 'react-toastify';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 const workSansDisplay = Work_Sans({
   subsets: ['latin'],
@@ -32,10 +33,11 @@ export default function RootLayout({
       <body
         className={`${workSansDisplay.className} ${satisfyDisplay.variable} antialiased text-content-body min-h-screen flex flex-col`}
       >
-        <Header />
-        {children}
-
-        <ToastContainer position="top-right" />
+        <NuqsAdapter>
+          <Header />
+          {children}
+          <ToastContainer position="top-right" />
+        </NuqsAdapter>
       </body>
     </html>
   );

@@ -6,13 +6,26 @@ import {
 } from '@/presentation/pages/concerts/concertCardContent/ConcertCardContent';
 import userEvent from '@testing-library/user-event';
 import { listConcertSummariesResponse } from '@/tests/mocks/data-providers/concert-summary.data-provider';
+import { useState } from 'react';
 
 const pushMock = jest.fn();
+const setQueryMock = jest.fn();
 
 let mockSearchParams = new URLSearchParams();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
-  useSearchParams: () => mockSearchParams,
+}));
+
+jest.mock('nuqs', () => ({
+  useQueryState: (key: string) => {
+    const [value, setValue] = useState(mockSearchParams.get(key) ?? '');
+
+    const setQuery = (nextValue: string) => {
+      setQueryMock(nextValue);
+      setValue(nextValue);
+    };
+    return [value, setQuery] as const;
+  },
 }));
 
 const makeSut = (
@@ -47,13 +60,13 @@ describe('ConcertCardContent', () => {
 
       await user.type(searchInput, text);
 
-      expect(pushMock).toHaveBeenCalled();
-      const lastCall = pushMock.mock.calls.at(-1);
-      expect(lastCall?.[0]).toBe('/concerts?q=Dashboard%20Confessional');
+      expect(setQueryMock).toHaveBeenCalled();
+      const lastCall = setQueryMock.mock.calls.at(-1);
+      expect(lastCall?.[0]).toBe(text);
 
       await user.clear(searchInput);
-      const lastClearCall = pushMock.mock.calls.at(-1);
-      expect(lastClearCall?.[0]).toBe('/concerts');
+      const lastClearCall = setQueryMock.mock.calls.at(-1);
+      expect(lastClearCall?.[0]).toBe('');
     });
 
     it('should submit the form when search term is added', async () => {
