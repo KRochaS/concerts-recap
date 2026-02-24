@@ -49,14 +49,16 @@ export const InitialMemory = ({ onContinue }: NewConcertStepProps) => {
       <div className="mb-8 h-full w-full">
         <TicketUpload />
       </div>
-      <Textarea
-        data-testid="description-input"
-        label="Tell us how the night felt."
-        placeholder="Describe your first impressions, emotions, and standout moments from the concert..."
-        rows={6}
-        {...register('description')}
-      />
-      <FieldError message={errors.description?.message} />
+      <div className="w-full">
+        <Textarea
+          data-testid="description-input"
+          label="Tell us how the night felt."
+          placeholder="Describe your first impressions, emotions, and standout moments from the concert..."
+          rows={6}
+          {...register('description')}
+        />
+        <FieldError message={errors.description?.message} />
+      </div>
 
       <div className="flex flex-col md:flex-row gap-4 md:gap-6 mt-8 w-full">
         <div className="flex flex-col gap-4 flex-1">

@@ -17,7 +17,12 @@ export const ConcertCard = ({
   return (
     <div className="rounded-2xl border border-zinc-800 bg-[#0a0b14] p-6 flex flex-col gap-4">
       <div>
-        <h3 className="text-lg font-semibold text-white">{artist}</h3>
+        <h3
+          className="text-lg font-semibold text-white w-75.75 whitespace-nowrap overflow-hidden text-ellipsis"
+          title={artist}
+        >
+          {artist}
+        </h3>
         <p className="text-sm text-zinc-400">{city}</p>
         <p className="text-xs text-zinc-500 mt-1">{formattedDate}</p>
         <p className="text-xs text-zinc-500">{kmTraveled} km travelled</p>
