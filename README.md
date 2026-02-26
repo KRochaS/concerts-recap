@@ -18,23 +18,95 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# Concerts Recap
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+Um sistema web para registrar, organizar e compartilhar memórias de shows, com upload de ingressos, integração com IA e arquitetura moderna fullstack.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Funcionalidades
 
-## Learn More
+- Cadastro de shows/memórias
+- Upload de imagens de ingressos (Firebase Storage)
+- Visualização e edição dos registros
+- Integração com Vercel AI SDK para leitura de imagens
+- Autenticação via Google
+- Fluxo flexível: salve só a imagem e edite depois
+- UI moderna com React e Tailwind
 
-To learn more about Next.js, take a look at the following resources:
+## Tecnologias Utilizadas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Firebase Storage
+- Prisma ORM
+- PostgreSQL
+- Autenticação OAuth (Google)
+- Vercel AI SDK
+- Docker (docker-compose)
+- Jest, Playwright (testes)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Como rodar o projeto
 
-## Deploy on Vercel
+1. **Clone o repositório:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/seu-usuario/concerts-recap.git
+   cd concerts-recap
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+2. **Configure o arquivo `.env`:**
+   - Preencha as variáveis do Firebase, banco de dados e autenticação Google.
+   - Exemplo:
+     ```env
+     NEXT_PUBLIC_FIREBASE_API_KEY=...
+     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+     NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+     NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+     NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+     NEXT_PUBLIC_FIREBASE_APP_ID=...
+     DATABASE_URL=...
+     AUTH_GOOGLE_ID=...
+     AUTH_GOOGLE_SECRET=...
+     AUTH_SECRET=...
+     ```
+
+3. **Instale as dependências:**
+
+   ```bash
+   npm install
+   ```
+
+4. **Rode as migrations do banco:**
+
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Inicie o servidor:**
+
+   ```bash
+   npm run dev
+   ```
+
+6. **Acesse em:**
+   [http://localhost:3000](http://localhost:3000)
+
+## Testes
+
+- Para rodar os testes:
+  ```bash
+  npm run test
+  # ou
+  npm run test:e2e
+  ```
+
+## Observações
+
+- As regras do Firebase Storage devem ser ajustadas para produção.
+- Nunca exponha segredos sensíveis em repositórios públicos.
+- Projeto ideal para portfólio, demonstrando integração fullstack, cloud e IA.
+
+---
+
+Desenvolvido por [Seu Nome](https://github.com/seu-usuario)
