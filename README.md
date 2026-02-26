@@ -100,13 +100,3 @@ Um sistema web para registrar, organizar e compartilhar memórias de shows, com 
   # ou
   npm run test:e2e
   ```
-
-## Observações
-
-- As regras do Firebase Storage devem ser ajustadas para produção.
-- Nunca exponha segredos sensíveis em repositórios públicos.
-- Projeto ideal para portfólio, demonstrando integração fullstack, cloud e IA.
-
----
-
-Desenvolvido por [Seu Nome](https://github.com/seu-usuario)
