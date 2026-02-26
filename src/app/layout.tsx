@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="app-background">
+    <html lang="en" className="app-background" suppressHydrationWarning>
       <body
         className={`${workSansDisplay.className} ${satisfyDisplay.variable} antialiased text-content-body min-h-screen flex flex-col`}
       >
