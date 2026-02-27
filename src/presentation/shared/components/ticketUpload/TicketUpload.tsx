@@ -2,17 +2,28 @@ import React, { useState, useRef } from 'react';
 import { ImagePlus, X } from 'lucide-react';
 import Image from 'next/image';
 
-const TicketUpload = () => {
+interface TicketUploadProps {
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+const TicketUpload = ({ onChange }: TicketUploadProps) => {
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      setPreview(null);
+      return;
+    }
 
     const reader = new FileReader();
-    reader.onloadend = () => setPreview(reader.result as string);
+    reader.onloadend = () => {
+      const base64 = reader.result as string;
+      setPreview(base64);
+    };
     reader.readAsDataURL(file);
+    onChange?.(e);
   };
 
   const removeImage = (e: React.MouseEvent) => {
