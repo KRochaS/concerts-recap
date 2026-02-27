@@ -14,8 +14,11 @@ import { useForm, Controller } from 'react-hook-form';
 import TicketUpload from '@/presentation/shared/components/ticketUpload/TicketUpload';
 import { createConcertAction } from '@/app/actions/concert.actions';
 import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { uploadFile } from '@/presentation/shared/lib/firebase';
 
 export const InitialMemory = ({ onContinue }: NewConcertStepProps) => {
+  const [_urlFile, setUrlFile] = useState<string | null>(null);
   const {
     register,
     control,
@@ -41,13 +44,29 @@ export const InitialMemory = ({ onContinue }: NewConcertStepProps) => {
     toast.success('Concert created successfully.');
     onContinue?.();
   };
+
+  const handleImageChange = async (file: File | null) => {
+    if (!file) return;
+
+    try {
+      const url = await uploadFile('concerts/ticket', file);
+      setUrlFile(url);
+    } catch {
+      toast.error('Failed to upload ticket image. Please try again.');
+    }
+  };
+
   return (
     <form
       onSubmit={control.handleSubmit(submitData)}
       className="flex-1 flex flex-col items-center justify-start max-w-4xl mx-auto w-full mb-44"
     >
       <div className="mb-8 h-full w-full">
-        <TicketUpload />
+        <TicketUpload
+          onChange={(event) => {
+            handleImageChange(event.target.files?.[0] ?? null);
+          }}
+        />
       </div>
       <div className="w-full">
         <Textarea
