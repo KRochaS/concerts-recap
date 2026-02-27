@@ -1,22 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+<img width="1920" height="901" alt="image" src="https://github.com/user-attachments/assets/8ae6457f-37e1-4fd2-950c-e9660fb25ee7" />
+<img width="1920" height="1868" alt="FireShot Capture 004 - Concerts Recap -  localhost" src="https://github.com/user-attachments/assets/5026c186-1f0e-4ddb-87b7-3c0c7dbc3d5e" />
+<img width="1920" height="1568" alt="FireShot Capture 005 - Concerts Recap -  localhost" src="https://github.com/user-attachments/assets/3e7013a3-be7e-4228-80a1-0ad4fd8ccc85" />
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
 # Concerts Recap
 
