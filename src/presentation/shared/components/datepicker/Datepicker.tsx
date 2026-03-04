@@ -11,6 +11,7 @@ interface DatePickerProps {
   onChange?: (date?: Date) => void;
   label?: string;
   dataTestId?: string;
+  disabled?: boolean;
 }
 
 export function DatePicker({
@@ -18,6 +19,7 @@ export function DatePicker({
   onChange,
   label = 'Concert date',
   dataTestId,
+  disabled = false,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -43,18 +45,23 @@ export function DatePicker({
 
       <button
         type="button"
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          if (disabled) return;
+          setOpen(!open);
+        }}
+        disabled={disabled}
         data-testid={dataTestId}
         className={cn(
           'flex h-11 w-full items-center justify-between rounded-lg border px-3 text-sm text-content-body transition-all outline-none',
-          'border-border-secondary bg-[#0f0f10] focus:ring-0 focus:ring-offset-0 focus:border-border-secondary active:border-border-secondary'
+          'border-border-secondary bg-[#0f0f10] focus:ring-0 focus:ring-offset-0 focus:border-border-secondary active:border-border-secondary',
+          disabled && 'opacity-60 cursor-not-allowed'
         )}
       >
         {value ? value.toLocaleDateString('pt-BR') : 'Select date'}
         <Calendar className="w-4 h-4 opacity-60 text-white" />
       </button>
 
-      {open && (
+      {open && !disabled && (
         <div className="absolute left-0 top-[calc(100%+8px)] z-50 w-full md:w-auto">
           <CalendarContent
             value={value}

@@ -32,7 +32,6 @@ export class PrismaConcertRepository implements ConcertRepository {
   }
 
   async findByConcert(data: CreateConcertDTO): Promise<ConcertSummary | null> {
-    // Normaliza a data para UTC 00:00:00 e busca por registros no mesmo dia
     const inputDate = new Date(data.date);
     const startOfDay = new Date(
       Date.UTC(
