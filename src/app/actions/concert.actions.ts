@@ -3,7 +3,7 @@
 import { cache } from 'react';
 import { SearchConcertSummaryUseCase } from '@/core/application/concerts/search-concert-summary.usecase';
 import { ConcertSummary } from '@/core/domain/concerts';
-import { PrismaConcertRepository } from '@/infra/repository/prisma-concert.repository';
+import { PrismaConcertRepository, AIApiRepository } from '@/infra/repository';
 import { prisma } from '@/lib/prisma';
 import {
   CreateConcertDTO,
@@ -11,6 +11,8 @@ import {
 } from '@/core/application/concerts/create-concert.dto';
 import z from 'zod';
 import { CreateConcertUseCase } from '@/core/application/concerts/create-concert.usecase';
+import { ExtractConcertDataUseCase } from '@/core/application/ai';
+import { ExtractedConcertData } from '@/core/domain/ai';
 import { revalidatePath } from 'next/cache';
 
 type SearchFormState = {
@@ -18,6 +20,10 @@ type SearchFormState = {
   concerts?: ConcertSummary[];
   message?: string;
 };
+
+type ExtractConcertDataActionResult =
+  | { success: true; data: ExtractedConcertData }
+  | { success: false; message: string };
 
 const getSearchUseCase = cache(() => {
   const repository = new PrismaConcertRepository(prisma);
@@ -82,6 +88,28 @@ export async function searchConcertAction(
     return {
       success: false,
       message: 'Failed to search concerts. Please try again later.',
+    };
+  }
+}
+
+export async function extractConcertDataAction(
+  imageUrl: string
+): Promise<ExtractConcertDataActionResult> {
+  try {
+    const aiRepository = new AIApiRepository();
+    const useCase = new ExtractConcertDataUseCase(aiRepository);
+    const data = await useCase.execute(imageUrl);
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'Failed to analyze ticket image';
+    return {
+      success: false,
+      message,
     };
   }
 }
