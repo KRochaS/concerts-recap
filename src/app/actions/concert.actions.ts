@@ -3,7 +3,8 @@
 import { cache } from 'react';
 import { SearchConcertSummaryUseCase } from '@/core/application/concerts/search-concert-summary.usecase';
 import { ConcertSummary } from '@/core/domain/concerts';
-import { PrismaConcertRepository, AIApiRepository } from '@/infra/repository';
+import { PrismaConcertRepository } from '@/infra/repository';
+
 import { prisma } from '@/lib/prisma';
 import {
   CreateConcertDTO,
@@ -14,6 +15,7 @@ import { CreateConcertUseCase } from '@/core/application/concerts/create-concert
 import { ExtractConcertDataUseCase } from '@/core/application/ai';
 import { ExtractedConcertData } from '@/core/domain/ai';
 import { revalidatePath } from 'next/cache';
+import { AIApiService } from '@/infra/services';
 
 type SearchFormState = {
   success: boolean;
@@ -96,8 +98,8 @@ export async function extractConcertDataAction(
   imageUrl: string
 ): Promise<ExtractConcertDataActionResult> {
   try {
-    const aiRepository = new AIApiRepository();
-    const useCase = new ExtractConcertDataUseCase(aiRepository);
+    const aiService = new AIApiService();
+    const useCase = new ExtractConcertDataUseCase(aiService);
     const data = await useCase.execute(imageUrl);
 
     return {

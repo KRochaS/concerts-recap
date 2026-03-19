@@ -1,10 +1,10 @@
-import { AIRepository } from '@/core/domain/ai/ai.repository';
+import { AIService } from '@/core/domain/ai/ai.service';
 import { ExtractedConcertData } from '@/core/domain/ai/extracted-concert-data.entity';
 
 export class ExtractConcertDataUseCase {
-  constructor(private aiRepository: AIRepository) {}
+  constructor(private aiService: AIService) {}
 
   async execute(imageUrl: string): Promise<ExtractedConcertData> {
-    return this.aiRepository.extractConcertDataFromImage(imageUrl);
+    return this.aiService.extractConcertDataFromImage(imageUrl);
   }
 }

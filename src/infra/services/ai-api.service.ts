@@ -1,7 +1,7 @@
-import { AIRepository } from '@/core/domain/ai/ai.repository';
+import { AIService } from '@/core/domain/ai/ai.service';
 import { ExtractedConcertData } from '@/core/domain/ai/extracted-concert-data.entity';
 
-export class AIApiRepository implements AIRepository {
+export class AIApiService implements AIService {
   constructor(
     private apiBaseUrl: string = process.env.NEXT_PUBLIC_APP_URL ||
       'http://localhost:3000'
