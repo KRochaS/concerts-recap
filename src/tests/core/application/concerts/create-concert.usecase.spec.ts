@@ -4,7 +4,7 @@ import { createConcertPayload } from '@/tests/mocks/data-providers/create-concer
 
 const makeRepository = (overrides: Partial<ConcertRepository>) => {
   const base = {
-    create: jest.fn(async () => undefined),
+    create: jest.fn(async () => 'mock-concert-id'),
   };
 
   return { ...base, ...overrides } as ConcertRepository;
@@ -18,7 +18,7 @@ describe('Create Concert Use Case', () => {
     const useCase = new CreateConcertUseCase(repository);
     const input = createConcertPayload();
 
-    await expect(useCase.execute(input)).resolves.toBeUndefined();
+    await expect(useCase.execute(input)).resolves.toBe('mock-concert-id');
     expect(repository.create).toHaveBeenCalledWith(input);
   });
 

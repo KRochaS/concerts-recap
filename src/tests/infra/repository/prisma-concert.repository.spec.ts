@@ -7,7 +7,10 @@ import { createConcertPayload } from '@/tests/mocks/data-providers/create-concer
 
 type ConcertDelegateMock = {
   create: jest.MockedFunction<
-    (args: { data: CreateConcertDTO }) => Promise<void>
+    (args: {
+      data: CreateConcertDTO;
+      select?: Record<string, boolean>;
+    }) => Promise<{ id: string }>
   >;
   findFirst: jest.MockedFunction<
     (args: {
@@ -92,14 +95,17 @@ describe('PrismaConcertRepository', () => {
   });
 
   describe('create', () => {
-    it('should call prisma create with correct data', async () => {
+    it('should call prisma create with correct data and return the created id', async () => {
       const data = createConcertPayload();
+      prisma.concertMemory.create.mockResolvedValue({ id: 'mock-concert-id' });
 
-      await repository.create(data);
+      const result = await repository.create(data);
 
       expect(prisma.concertMemory.create).toHaveBeenCalledWith({
         data,
+        select: { id: true },
       });
+      expect(result).toBe('mock-concert-id');
     });
   });
 

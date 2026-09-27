@@ -49,9 +49,7 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=""
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=""
 NEXT_PUBLIC_FIREBASE_APP_ID=""
 
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-
-# Necessária para o endpoint /api/chat que usa modelo openai/gpt-4o
+# Necessária para a extração de dados do ingresso com modelo openai/gpt-4o
 OPENAI_API_KEY=""
 
 # Opcional (controle do total de seeds no setup E2E)

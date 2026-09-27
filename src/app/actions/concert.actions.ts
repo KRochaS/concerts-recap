@@ -12,10 +12,11 @@ import {
 } from '@/core/application/concerts/create-concert.dto';
 import z from 'zod';
 import { CreateConcertUseCase } from '@/core/application/concerts/create-concert.usecase';
-import { ExtractConcertDataUseCase } from '@/core/application/ai';
+import { extractConcertDataSchema } from '@/core/application/ai/extract-concert-data.dto';
+import { ExtractConcertDataUseCase } from '@/core/application/ai/extract-concert-data.usecase';
 import { ExtractedConcertData } from '@/core/domain/ai';
 import { revalidatePath } from 'next/cache';
-import { AIApiService } from '@/infra/services';
+import { AIApiService, CONCERT_TICKET_NOT_RECOGNIZED } from '@/infra/services';
 
 type SearchFormState = {
   success: boolean;
@@ -34,6 +35,7 @@ const getSearchUseCase = cache(() => {
 
 export async function createConcertAction(data: CreateConcertDTO) {
   const validated = createConcertSchema.safeParse(data);
+  let concertId: string;
 
   if (!validated.success) {
     const { fieldErrors } = z.flattenError(validated.error);
@@ -47,7 +49,7 @@ export async function createConcertAction(data: CreateConcertDTO) {
   try {
     const repository = new PrismaConcertRepository(prisma);
     const useCase = new CreateConcertUseCase(repository);
-    await useCase.execute(validated.data);
+    concertId = await useCase.execute(validated.data);
     revalidatePath('/', 'layout');
   } catch (error) {
     const _error = error as Error;
@@ -68,6 +70,7 @@ export async function createConcertAction(data: CreateConcertDTO) {
   return {
     success: true,
     message: 'Concert created successfully.',
+    concertId,
   };
 }
 
@@ -97,21 +100,39 @@ export async function searchConcertAction(
 export async function extractConcertDataAction(
   imageUrl: string
 ): Promise<ExtractConcertDataActionResult> {
+  const validated = extractConcertDataSchema.safeParse({ imageUrl });
+
+  if (!validated.success) {
+    return {
+      success: false,
+      message: 'Invalid ticket image URL. Please try again.',
+    };
+  }
+
   try {
     const aiService = new AIApiService();
     const useCase = new ExtractConcertDataUseCase(aiService);
-    const data = await useCase.execute(imageUrl);
+    const data = await useCase.execute(validated.data.imageUrl);
 
     return {
       success: true,
       data,
     };
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : 'Failed to analyze ticket image';
+    if (
+      error instanceof Error &&
+      error.message === CONCERT_TICKET_NOT_RECOGNIZED
+    ) {
+      return {
+        success: false,
+        message:
+          "This image doesn't look like a concert ticket. Please upload a clear photo of the concert ticket.",
+      };
+    }
+
     return {
       success: false,
-      message,
+      message: 'Failed to analyze ticket image. Please try again later.',
     };
   }
 }

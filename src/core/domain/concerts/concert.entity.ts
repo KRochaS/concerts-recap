@@ -47,10 +47,12 @@ export type ConcertSummary = Pick<
   | 'updatedAt'
 >;
 
-export type ConcertInitialData = Pick<
+export type CreateConcertInput = Pick<
   Concert,
   'date' | 'artist' | 'venue' | 'city' | 'description'
->;
+> & {
+  ticketImageUrl?: string | null;
+};
 
 export type ConcertAISuggestions = Omit<
   Concert,

@@ -20,12 +20,17 @@ export function useTicketImageExtraction(
   const [isAutoFilled, setIsAutoFilled] = useState(false);
 
   const fillFormFromExtractedData = (data: ExtractedConcertData) => {
+    const extractedDate = new Date(
+      data.date.getUTCFullYear(),
+      data.date.getUTCMonth(),
+      data.date.getUTCDate()
+    );
     const fieldsToSet: Partial<Record<keyof CreateConcertDTO, string | Date>> =
       {
         artist: data.artist,
         venue: data.venue,
         city: data.city,
-        date: data.date,
+        date: extractedDate,
       };
 
     Object.entries(fieldsToSet).forEach(([field, value]) => {

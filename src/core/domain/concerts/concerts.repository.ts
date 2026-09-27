@@ -1,9 +1,11 @@
-import { CreateConcertDTO } from '@/core/application/concerts/create-concert.dto';
-import { ConcertSummary } from '@/core/domain/concerts/concert.entity';
+import {
+  ConcertSummary,
+  CreateConcertInput,
+} from '@/core/domain/concerts/concert.entity';
 
 export interface ConcertRepository {
-  create(data: CreateConcertDTO): Promise<void>;
-  findByConcert(data: CreateConcertDTO): Promise<ConcertSummary | null>;
+  create(data: CreateConcertInput): Promise<string>;
+  findByConcert(data: CreateConcertInput): Promise<ConcertSummary | null>;
   findManySummaries(): Promise<ConcertSummary[]>;
   searchManySummaries(term: string): Promise<ConcertSummary[]>;
 }

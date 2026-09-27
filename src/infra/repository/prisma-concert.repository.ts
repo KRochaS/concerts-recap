@@ -1,5 +1,4 @@
-import { CreateConcertDTO } from '@/core/application/concerts/create-concert.dto';
-import { ConcertSummary } from '@/core/domain/concerts';
+import { ConcertSummary, CreateConcertInput } from '@/core/domain/concerts';
 import { ConcertRepository } from '@/core/domain/concerts/concerts.repository';
 import { PrismaClient } from '@/generated/prisma/client';
 
@@ -18,8 +17,8 @@ const CONCERT_SELECT = {
 export class PrismaConcertRepository implements ConcertRepository {
   constructor(private prisma: PrismaClient) {}
 
-  async create(data: CreateConcertDTO): Promise<void> {
-    await this.prisma.concertMemory.create({
+  async create(data: CreateConcertInput): Promise<string> {
+    const created = await this.prisma.concertMemory.create({
       data: {
         artist: data.artist,
         venue: data.venue,
@@ -28,10 +27,14 @@ export class PrismaConcertRepository implements ConcertRepository {
         description: data.description,
         ticketImageUrl: data.ticketImageUrl ?? null,
       },
+      select: { id: true },
     });
+    return created.id;
   }
 
-  async findByConcert(data: CreateConcertDTO): Promise<ConcertSummary | null> {
+  async findByConcert(
+    data: CreateConcertInput
+  ): Promise<ConcertSummary | null> {
     const inputDate = new Date(data.date);
     const startOfDay = new Date(
       Date.UTC(

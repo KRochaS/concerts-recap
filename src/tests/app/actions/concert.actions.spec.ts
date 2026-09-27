@@ -1,5 +1,6 @@
 import {
   createConcertAction,
+  extractConcertDataAction,
   searchConcertAction,
 } from '@/app/actions/concert.actions';
 import { listConcertSummariesResponse } from '@/tests/mocks/data-providers/concert-summary.data-provider';
@@ -9,6 +10,12 @@ jest.mock('@/lib/prisma', () => ({ prisma: {} }));
 
 const mockedSearchExecute = jest.fn();
 const mockedCreateConcertExecute = jest.fn();
+const mockedExtractConcertDataExecute = jest.fn();
+
+jest.mock('@/infra/services', () => ({
+  AIApiService: jest.fn(),
+  CONCERT_TICKET_NOT_RECOGNIZED: 'CONCERT_TICKET_NOT_RECOGNIZED',
+}));
 
 jest.mock('@/core/application/concerts/search-concert-summary.usecase', () => ({
   SearchConcertSummaryUseCase: jest.fn().mockImplementation(() => ({
@@ -22,10 +29,17 @@ jest.mock('@/core/application/concerts/create-concert.usecase', () => ({
   })),
 }));
 
+jest.mock('@/core/application/ai/extract-concert-data.usecase', () => ({
+  ExtractConcertDataUseCase: jest.fn().mockImplementation(() => ({
+    execute: mockedExtractConcertDataExecute,
+  })),
+}));
+
 describe('Server Actions: Concert', () => {
   beforeEach(() => {
     mockedSearchExecute.mockReset();
     mockedCreateConcertExecute.mockReset();
+    mockedExtractConcertDataExecute.mockReset();
   });
 
   describe('searchConcertAction', () => {
@@ -97,12 +111,13 @@ describe('Server Actions: Concert', () => {
 
   describe('createConcertAction', () => {
     it('should create a concert successfully', async () => {
-      mockedCreateConcertExecute.mockResolvedValue(undefined);
+      mockedCreateConcertExecute.mockResolvedValue('mock-concert-id');
 
       const data = createConcertPayload();
       const result = await createConcertAction(data);
       expect(result?.success).toBe(true);
       expect(result?.message).toBe('Concert created successfully.');
+      expect(result?.concertId).toBe('mock-concert-id');
     });
     it('should validate the input data and return errors for invalid data', async () => {
       const data = createConcertPayload({
@@ -148,6 +163,65 @@ describe('Server Actions: Concert', () => {
       expect(result?.message).toBe(
         'Failed to create concert. Please try again later.'
       );
+    });
+  });
+
+  describe('extractConcertDataAction', () => {
+    it('should reject an invalid image URL before calling the use case', async () => {
+      const result = await extractConcertDataAction('invalid-url');
+
+      expect(result).toEqual({
+        success: false,
+        message: 'Invalid ticket image URL. Please try again.',
+      });
+      expect(mockedExtractConcertDataExecute).not.toHaveBeenCalled();
+    });
+
+    it('should call the use case with a valid image URL', async () => {
+      const imageUrl = 'https://example.com/ticket.jpg';
+      const extractedData = {
+        date: new Date('2026-03-01T21:00:00Z'),
+        artist: 'Artist',
+        venue: 'Venue',
+        city: 'City',
+      };
+      mockedExtractConcertDataExecute.mockResolvedValue(extractedData);
+
+      const result = await extractConcertDataAction(imageUrl);
+
+      expect(result).toEqual({ success: true, data: extractedData });
+      expect(mockedExtractConcertDataExecute).toHaveBeenCalledWith(imageUrl);
+    });
+
+    it('should return a ticket-specific error when the image is rejected', async () => {
+      mockedExtractConcertDataExecute.mockRejectedValue(
+        new Error('CONCERT_TICKET_NOT_RECOGNIZED')
+      );
+
+      const result = await extractConcertDataAction(
+        'https://example.com/ticket.jpg'
+      );
+
+      expect(result).toEqual({
+        success: false,
+        message:
+          "This image doesn't look like a concert ticket. Please upload a clear photo of the concert ticket.",
+      });
+    });
+
+    it('should hide technical errors from the UI', async () => {
+      mockedExtractConcertDataExecute.mockRejectedValue(
+        new Error('PROVIDER_INTERNAL_ERROR')
+      );
+
+      const result = await extractConcertDataAction(
+        'https://example.com/ticket.jpg'
+      );
+
+      expect(result).toEqual({
+        success: false,
+        message: 'Failed to analyze ticket image. Please try again later.',
+      });
     });
   });
 });
